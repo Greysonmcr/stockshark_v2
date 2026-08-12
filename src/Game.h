@@ -9,6 +9,10 @@ class Game {
 private:
     std::vector<Player> players;
 
+    int smallBlind;
+
+    int bigBlind;
+
     int dealerIndex;
 
     Deck deck;
@@ -29,9 +33,13 @@ private:
 
 public:
     // Creates a reference to the players vector as to not create an unnecessary copy
-    Game(const std::vector<Player>& players);
+    Game(const std::vector<Player>& players, int smallBlind, int bigBlind);
     
     const std::vector<Player>& getPlayers() const;
+
+    int getSmallBlind() const;
+
+    int getBigBlind() const;
 
     int getDealerIndex() const;
 
@@ -55,10 +63,14 @@ public:
 
     void dealTurnOrRiver();
 
+    void initializePreFlopBetting();
+
+    void initializePostFlopBetting();
+
     void bettingRound();
 
     bool bettingRoundComplete() const;
 
-    bool canPlayerRaise(int PlayerIndex) const;
+    bool canPlayerRaise(int playerIndex) const;
 
 };

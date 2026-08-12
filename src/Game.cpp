@@ -1,8 +1,10 @@
 #include "Game.h"
 
 // Takes players by const reference to avoid an extra copy into the constructor parameter
-Game::Game(const std::vector<Player>& players)
+Game::Game(const std::vector<Player>& players, int smallBlind, int bigBlind)
     : players(players),
+      smallBlind(smallBlind),
+      bigBlind(bigBlind),
       dealerIndex(0),
       pot(0),
       currentBet(0),
@@ -14,6 +16,14 @@ Game::Game(const std::vector<Player>& players)
 
 const std::vector<Player>& Game::getPlayers() const {
     return players;
+}
+
+int Game::getSmallBlind() const {
+    return smallBlind;
+}
+
+int Game::getBigBlind() const {
+    return bigBlind;
 }
 
 int Game::getDealerIndex() const {
@@ -107,6 +117,24 @@ bool Game::bettingRoundComplete() const {
     }
 
     return true;
+}
+
+void Game::initializePreFlopBetting() {
+    currentBet = bigBlind;
+    lastRaiseSize = bigBlind;
+    currentBets.assign(players.size(), 0);
+    betWhenLastActed.assign(players.size(), -1);
+    currentBets[(dealerIndex + 1) % players.size()] = smallBlind;
+    currentBets[(dealerIndex + 2) % players.size()] = bigBlind;
+    currentPlayerIndex = (dealerIndex + 3) % players.size();
+}
+
+void Game::initializePostFlopBetting() {
+    currentBet = 0;
+    lastRaiseSize = bigBlind;
+    currentBets.assign(players.size(), 0);
+    betWhenLastActed.assign(players.size(), -1);
+    currentPlayerIndex = (dealerIndex + 1) % players.size();
 }
 
 void Game::bettingRound() {
