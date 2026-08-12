@@ -1,5 +1,6 @@
 #pragma once
 #include "Card.h"
+#include "Action.h"
 #include <string>
 #include <vector>
 
@@ -33,4 +34,6 @@ public:
     void fold();
 
     void resetFold();
+
+    Action chooseAction(int amountToCall, int currentBet, int playerCurrentBet, int lastRaiseSize, bool canRaise);
 };

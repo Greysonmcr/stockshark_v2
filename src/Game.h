@@ -15,17 +15,17 @@ private:
 
     std::vector<Card> communityCards;
 
+    int currentBet;
+
+    int lastRaiseSize;
+
     int pot;
 
     std::vector<int> currentBets;
 
-    int currentBetToMatch;
+    std::vector<int> betWhenLastActed;
 
     int currentPlayerIndex;
-
-    int lastRaiserIndex;
-
-    bool hasActionOccurred;
 
 public:
     // Creates a reference to the players vector as to not create an unnecessary copy
@@ -39,22 +39,26 @@ public:
 
     const std::vector<Card>& getCommunityCards() const;
 
+    int getCurrentBet() const;
+
+    int getLastRaiseSize() const;
+
     int getPot() const;
 
     const std::vector<int>& getCurrentBets() const;
 
-    int getCurrentBetToMatch() const;
-
     int getCurrentPlayerIndex() const;
-
-    int getLastRaiserIndex() const;
-
-    bool getHasActionOccurred() const;
 
     void startHand();
 
     void dealFlop();
 
     void dealTurnOrRiver();
+
+    void bettingRound();
+
+    bool bettingRoundComplete() const;
+
+    bool canPlayerRaise(int PlayerIndex) const;
 
 };
